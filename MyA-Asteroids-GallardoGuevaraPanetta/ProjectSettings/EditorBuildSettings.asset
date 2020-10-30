@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: ade18941f0915554a938f96113c5bba3
+  - enabled: 1
+    path: Assets/Scenes/Endless.unity
+    guid: 1574ff9b25844407fa4f23bb066243ed
+  - enabled: 0
+    path: Assets/Scenes/Endless2.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/LossScene.unity
+    guid: ae65ba23333158643a48335a05c79179
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: c5c814152bb044eb7a7e99daca462229
+  m_configObjects: {}
