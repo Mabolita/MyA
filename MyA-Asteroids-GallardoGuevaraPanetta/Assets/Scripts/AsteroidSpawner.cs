@@ -40,7 +40,7 @@ public class AsteroidSpawner : MonoBehaviour
         timer += Time.deltaTime;
         if(timer >= timertospawn)
         {
-            var rr = Random.Range(0, 3);
+            var rr = Random.Range(0, 4);
             var asteroid = _largeAsteroidPool.Get();
             asteroid.pool = _largeAsteroidPool;
             if(rr == 0)

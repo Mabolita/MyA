@@ -18,6 +18,11 @@ public class Bullet : MonoBehaviour
         projectilespeed = newspeed;
         return this;
     }
+    public Bullet SetSpawnTime(float newspawntime)
+    {
+        projectilespeed = newspawntime;
+        return this;
+    }
 
     protected virtual void OnEnable()
     {
@@ -53,6 +58,7 @@ public class Bullet : MonoBehaviour
     {
         bullet.gameObject.SetActive(false);
     }
+
 
 
 }

@@ -96,7 +96,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilespeed: 100
-  timeToDestroy: 3
+  _spawnTime: 0
+  timeToDestroy: 2
+  player: {fileID: 0}
 --- !u!50 &4536839493171375373
 Rigidbody2D:
   serializedVersion: 4

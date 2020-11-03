@@ -20,7 +20,7 @@ public class ExplosiveBullet : Bullet
     protected override void Explode()
     {
         Vector3 explosionposition = transform.position;
-       Collider2D[] objects = Physics2D.OverlapCircleAll(transform.position, RadiusExplosion);
+        Collider2D[] objects = Physics2D.OverlapCircleAll(transform.position, RadiusExplosion);
         foreach (Collider2D hit in objects)
         {
             Vector2 direction = hit.transform.position - transform.position;
@@ -29,10 +29,12 @@ public class ExplosiveBullet : Bullet
         Collider2D[] pushables = Physics2D.OverlapCircleAll(transform.position, PushExplosion);
         foreach (Collider2D item in pushables)
         {
-            if(item.GetComponent<Player>() == null)
+            if (item.GetComponent<Player>() == null)
             {
 
-              item.gameObject.SetActive(false);
+
+                _explosivepool.ReturnToPool(this);
+
 
             }
         }
@@ -46,7 +48,7 @@ public class ExplosiveBullet : Bullet
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.layer == 9)
+        if (collision.gameObject.layer == 9)
         {
             Explode();
         }
