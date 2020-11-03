@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2231526601752944861}
   - component: {fileID: 5414330643968856899}
   m_Layer: 0
-  m_Name: laserBlue08
+  m_Name: Bomber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +95,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b5fa64cc2146b44aa83d341f2011807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rb2d: {fileID: 0}
+  dir: {x: 0, y: 0}
   projectilespeed: 300
+  _spawnTime: 0
+  timeToDestroy: 3
+  player: {fileID: 0}
   RadiusExplosion: 1.41
   PushExplosion: 0.63
   force: 17.14

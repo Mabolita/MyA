@@ -26,17 +26,11 @@ public class Player : MonoBehaviour
 
     private WeaponHandler WH;
     public GameObject laser;
-    public BulletFactory _bulletFactory;
-    public ObjectPooler _objectPooler;
     public bool isCrashed;
     bool isFiring;
-
-
-
-
-
-
-
+    //publico?
+    public ModifiedObjectPooler<Bullet> _bulletPool;
+    public ModifiedObjectPooler<ExplosiveBullet> _explosiveBulletPool;
 
 
     List<IObserver> _allObserver = new List<IObserver>();
@@ -45,16 +39,21 @@ public class Player : MonoBehaviour
     {
         // JSONObject player
     }
+    private void Awake()
+    {
+        var factory = new BulletFactory();
+        _bulletPool = new ModifiedObjectPooler<Bullet>(factory.Create, Bullet.TurnOn,  Bullet.TurnOff, 5);
 
+        var explosiveBulletfactory = new ExplosiveFactory();
+        _explosiveBulletPool = new ModifiedObjectPooler<ExplosiveBullet>(explosiveBulletfactory.Create, Bullet.TurnOn, Bullet.TurnOff, 2);
+    }
 
-    // Start is called before the first frame update
     void Start()
     {
         WH = GetComponent<WeaponHandler>();
         _rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         dir = fireposition.position - transform.position;
@@ -141,11 +140,10 @@ public class Player : MonoBehaviour
 
     private void Fire()
     {
-        _objectPooler.GetPooledObject(fireposition.position, fireposition.rotation);
-
-
-        // MultipleObjectPooler.Instance.SpawnFromPool("Bullet", fireposition.position, fireposition.rotation);
-
+        var bullet = _bulletPool.Get();
+        bullet.pool = _bulletPool;
+        bullet.transform.position = fireposition.transform.position;
+        bullet.transform.rotation = transform.rotation;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -155,7 +153,6 @@ public class Player : MonoBehaviour
             EventManager.Instance.CallEvent("LifeLoss");
             StartCoroutine(Crashing());
             return;
-            //NotifyEvent("LifeLoss");
         }
     }
     IEnumerator Crashing()
@@ -166,4 +163,5 @@ public class Player : MonoBehaviour
 
         isCrashed = false;
     }
+
 }

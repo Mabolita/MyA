@@ -4,29 +4,18 @@ using UnityEngine;
 
 public class BulletFactory : IFactory<Bullet>
 {
-    private readonly ObjectPooler _objectPooler;
-    public Player player;
-    //public ObjectPooler _objectPooler;
+
+    public GameObject prefab;
 
 
-  public Bullet Create()
-  {
-        //Debug.Log(player);
-        GameObject myObject = GameObject.Instantiate(_objectPooler.pooledObject, _objectPooler.transform.position, _objectPooler.transform.rotation);
-        Bullet bala = myObject.GetComponent<Bullet>();
-        if(myObject == null)
-        {
-          //Debug.Log("my object is null");
-
-        }
-        Debug.Log(bala);
-
-        return bala;
-  
-  }
-    public BulletFactory(ObjectPooler pooler, Player playerObject)
+    public Bullet Create()
     {
-        _objectPooler = pooler;
-        player = playerObject;
+        var obj = Resources.Load<Bullet>("Prefab/Bullet");
+        obj.SetProjectileSpeed(300);
+        return Object.Instantiate(obj);
+       
+
+
     }
+
 }

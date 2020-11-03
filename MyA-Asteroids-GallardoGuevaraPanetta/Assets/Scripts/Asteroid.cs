@@ -6,16 +6,29 @@ public class Asteroid : MonoBehaviour
 {
     public float maxThrust;
     public float maxTorque;
-    public float speed;
     public Rigidbody2D rb;
     public int Size;
     private GameHandler gameHandler;
     public ParticleSystem PS;
+    public ModifiedObjectPooler<Asteroid> pool;
+    public AsteroidSpawner _asteroidSpawner;//no se si esto lo deberiamos poner aqui
 
+    public Asteroid SetMaxThrust(float newThrust)
+    {
+        maxThrust = newThrust;
+        return this;
+    }
+    public Asteroid SetMaxTorque(float newTorque)
+    {
+        maxTorque = newTorque;
+        return this;
+    }
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        //preguntar donde podriamos conseguir el asteroidspawner, ya que estoy llamando creacion de asteroids dentro de asteroids, esta bien?
+        _asteroidSpawner = FindObjectOfType<AsteroidSpawner>();
 
     }
     private void OnEnable()
@@ -35,28 +48,50 @@ public class Asteroid : MonoBehaviour
             if (Size == 3)
             {
                 EventManager.Instance.CallEvent("SendScore", 10);
-                MultipleObjectPooler.Instance.SpawnFromPool("MediumAsteroid", this.transform.position, this.transform.rotation);
-                MultipleObjectPooler.Instance.SpawnFromPool("MediumAsteroid", this.transform.position, this.transform.rotation);
+                for (int i = 0; i < 2; i++)
+                {
+                    var asteroid = _asteroidSpawner._mediumAsteroidPool.Get();
+                    asteroid.pool = _asteroidSpawner._mediumAsteroidPool;
+                    asteroid.transform.position = transform.position;
+                    
+                }
+               
             }
             else if (Size == 2)
             {
                 EventManager.Instance.CallEvent("SendScore", 25);
-                MultipleObjectPooler.Instance.SpawnFromPool("SmallAsteroid", transform.position, transform.rotation);
+               
+                var asteroid = _asteroidSpawner._smallAsteroidPool.Get();
+                asteroid.pool = _asteroidSpawner._smallAsteroidPool;
+                asteroid.transform.position = transform.position;
 
             }
             else
             {
                 EventManager.Instance.CallEvent("SendScore", 50);
-                this.gameObject.SetActive(false);
+                           
 
             }
             
             ParticleSystem obj = Instantiate(PS, transform.position, transform.rotation);
             obj.Play();
             Destroy(obj.gameObject, 2f);
-            this.gameObject.SetActive(false);
+            Die();
         }
     }
+    public static void TurnOn(Asteroid asteroid)
+    {
+        asteroid.gameObject.SetActive(true);
+    }
+    public static void TurnOff(Asteroid asteroid)
+    {
+        asteroid.gameObject.SetActive(false);
+    }
+    public void Die()
+    {
+        pool.ReturnToPool(this);
+    }
+
 
 
 }

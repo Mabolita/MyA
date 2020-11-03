@@ -8,15 +8,17 @@ public class MainMenu : MonoBehaviour
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
     public AudioSource audioo;
+    public int _currentscene;
 
     private void Awake()
     {
-        EventManager.Instance.SubEvent("LoseScene", LoseScene);
-            
+            EventManager.Instance.SubEvent("LoseScene", LoseScene);
+       
     }
     public void PlayGame()
     {
         SceneManager.LoadScene(1);
+        _currentscene = 1;
     }
     public void QuitGame()
     {
@@ -25,10 +27,12 @@ public class MainMenu : MonoBehaviour
     public void LoseScene(params object[] parameters)
     {
         SceneManager.LoadScene(2);
+        _currentscene = 2;
     }
     public void Credits()
     {
         SceneManager.LoadScene(3);
+        _currentscene = 3;
     }
     private void Update()
     {

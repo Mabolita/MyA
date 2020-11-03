@@ -8,22 +8,15 @@ public class ExplosiveBullet : Bullet
     public float PushExplosion;
     public float force;
 
-
-    // Start is called before the first frame update
     protected override void OnEnable()
     {
         base.OnEnable();
     }
-
-    protected override void Disable()
+    protected override void LateUpdate()
     {
-        base.Disable();
+        base.LateUpdate();
     }
 
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-    }
     protected override void Explode()
     {
         Vector3 explosionposition = transform.position;
@@ -58,4 +51,5 @@ public class ExplosiveBullet : Bullet
             Explode();
         }
     }
+
 }
